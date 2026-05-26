@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập - CyberStream</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding-top: 80px;
+    }
+    .login-card {
+        background: #000;
+        padding: 50px;
+        width: 100%;
+        max-width: 450px;
+        border-radius: 4px;
+        border: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="logo" href="/"><i class="fa-solid fa-play-circle"></i> CyberStream</a>
+  </div>
+</nav>
+
+<div class="login-container">
+  <div class="login-card">
+    <h2 style="margin-bottom: 30px;">Đăng Nhập</h2>
+    <p th:unless="${isSecuritySecure}" style="color: #ff4757; font-size: 0.8rem; margin-bottom: 20px;"><i class="fa-solid fa-bug"></i> Warning: Debug logging is enabled for SQL queries.</p>
+
+    <form th:action="@{/api/auth/login}" method="POST">
+      <div class="input-group" th:if="${isSecuritySecure}">
+        <input type="text" name="username" placeholder="Username" style="width: 100%; padding: 15px; background: #333; border: none; color: #fff; margin-bottom: 20px; border-radius: 4px;" required>
+        <input type="password" name="password" placeholder="Password" style="width: 100%; padding: 15px; background: #333; border: none; color: #fff; margin-bottom: 30px; border-radius: 4px;">
+      </div>
+      <div class="input-group" th:unless="${isSecuritySecure}">
+        <input type="text" name="username" placeholder="Username" style="width: 100%; padding: 15px; background: #333; border: none; color: #fff; margin-bottom: 20px; border-radius: 4px;">
+        <input type="password" name="password" placeholder="Password" style="width: 100%; padding: 15px; background: #333; border: none; color: #fff; margin-bottom: 30px; border-radius: 4px;">
+      </div>
+      <button type="submit" class="btn-submit" style="padding: 15px;">Truy Cập Hệ Thống</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

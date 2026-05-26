@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>CyberStream - Multimedia Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="logo" href="/"><i class="fa-solid fa-play-circle"></i> CyberStream</a>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Tìm kiếm phim, ca nhạc...">
+      <button><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <div class="nav-menu">
+      <a href="/studio"><i class="fa-solid fa-clapperboard"></i> Studio</a>
+      <a href="/login" class="btn-login"><i class="fa-solid fa-user"></i> Đăng Nhập</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+            <span class="trending">CHẾ ĐỘ:
+                <strong th:if="${isSecuritySecure}" style="color: #23a55a;">SECURE MODE</strong>
+                <strong th:unless="${isSecuritySecure}" style="color: #ff4757;">VULNERABLE</strong>
+            </span>
+    <h1>Lưu ý</h1>
+    <p>Còn nhiều phần chưa xong. Gọi bừa một ông học bảo mật cũng phá được.</p>
+    <div class="hero-buttons">
+      <button class="btn btn-play"><i class="fa-solid fa-play"></i> Xem Ngay</button>
+      <button class="btn btn-info"><i class="fa-solid fa-circle-info"></i> Thông Tin Chi Tiết</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <section class="content-section">
+    <h2><i class="fa-solid fa-film"></i> Nội Dung Công Cộng</h2>
+    <div class="media-grid">
+      <div class="media-card" th:each="fileName : ${mediaFiles}">
+        <div class="thumbnail-placeholder">
+          <i class="fa-solid fa-file-video"></i>
+        </div>
+        <div class="card-details">
+          <h4 th:text="${fileName}">video_name.mp4</h4>
+          <div th:if="${isSecuritySecure}">
+            <a th:href="@{/api/media/stream(file=${fileName})}" class="play-link" target="_blank">
+              <i class="fa-solid fa-lock"></i> Xem
+            </a>
+          </div>
+          <div th:unless="${isSecuritySecure}">
+            <a th:href="@{/api/media/stream(file=${fileName})}" class="play-link" target="_blank">
+              <i class="fa-solid fa-unlock"></i> Xem
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 TetraLine Entertainment Inc.</p>
+</footer>
+
+</body>
+</html>

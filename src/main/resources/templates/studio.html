@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Creator Studio - CyberStream</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="studio-page">
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="logo" href="/"><i class="fa-solid fa-play-circle"></i> CyberStream</a>
+    <div class="nav-menu">
+      <a href="/">Trang Chủ</a>
+      <a href="/login" class="btn-login">Đăng Nhập</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content" style="margin-top: 100px;">
+  <div class="content-section">
+    <h2><i class="fa-solid fa-sliders"></i> Creator Studio (Beta)</h2>
+    <div class="extended-grid">
+      <section class="studio-card">
+        <h3><i class="fa-solid fa-cloud-arrow-up"></i> Tải lên tài nguyên</h3>
+        <p>Cập nhật nội dung đa phương tiện của bạn lên máy chủ.</p>
+        <form th:action="@{/api/media/upload}" method="POST" enctype="multipart/form-data" target="api-frame">
+          <div class="upload-box">
+            <input type="file" name="file" required>
+          </div>
+          <button type="submit" class="btn-submit">Bắt đầu tải lên</button>
+        </form>
+      </section>
+
+      <section class="studio-card">
+        <h3><i class="fa-solid fa-link"></i> Preview</h3>
+        <p>Nhập địa chỉ URL để hệ thống tự động tải file từ nguồn bên thứ ba.</p>
+        <form th:action="@{/api/media/preview}" method="GET" target="api-frame">
+          <div class="input-group">
+            <input type="url" name="url" placeholder="https://picsum.photos/200" required>
+          </div>
+          <button type="submit" class="btn-submit">Thực hiện Fetch</button>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <section class="response-monitor">
+    <h4><i class="fa-solid fa-terminal"></i> Console Log</h4>
+    <iframe name="api-frame" class="mini-console" onload="styleIframe(this)"></iframe>
+  </section>
+</main>
+
+<script>
+  function styleIframe(iframe) {
+      try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          const style = doc.createElement('style');
+          style.textContent = `
+              body {
+                  background-color: #000 !important;
+                  color: #ffffff !important;
+                  font-family: 'Courier New', Courier, monospace;
+                  padding: 15px; margin: 0; line-height: 1.5;
+                  word-break: break-all; white-space: pre-wrap;
+              }
+          `;
+          doc.head.appendChild(style);
+      } catch (e) { console.error("Could not style iframe due to CORS or other issues."); }
+  }
+</script>
+
+<footer>
+  <p>© 2026 CyberStream Studio Panel. Dành cho nội bộ nhân viên.</p>
+</footer>
+
+</body>
+</html>
